@@ -1,0 +1,25 @@
+.form--Dishes {
+  display: flex;
+  flex-direction: column;
+  max-width: 300px;
+  margin: auto;
+  margin-top: 100px;
+  gap: 15px;
+}
+.form--Dishes label {
+  margin-top: 10px;
+  background-color: none;
+  font-weight: bold;
+}
+.form--Dishes input {
+  margin-top: 10px !important;
+  margin-bottom: 10px !important;
+}
+.form--Dishes input,
+.form--Dishes select {
+  margin-top: 10px;
+}
+.form--Dishes button {
+  font-weight: bold;
+  height: 50px;
+}/*# sourceMappingURL=DishForm.css.map */

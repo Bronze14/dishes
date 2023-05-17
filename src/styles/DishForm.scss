@@ -1,0 +1,28 @@
+.form--Dishes{
+    display: flex;
+    flex-direction: column;
+    max-width: 300px;
+    margin: auto;
+    margin-top: 100px;
+    gap:15px;
+    label {
+        margin-top: 10px; 
+        background-color: none;
+        font-weight: bold;      
+    }
+    input{
+        margin-top: 10px !important;
+        margin-bottom: 10px !important;;
+    }
+    input,
+    select {
+        margin-top: 10px; 
+        
+    }
+    
+    button{
+        font-weight: bold;
+        height: 50px;
+    }
+
+}

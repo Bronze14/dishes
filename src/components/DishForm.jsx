@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { useFormik } from 'formik';
 import { TextField, Button, Select, MenuItem, FormControl, InputLabel  } from '@mui/material';
 import '../styles/DishForm.scss';
@@ -12,20 +12,18 @@ import dayjs from 'dayjs';
 
 
 function DishForm() {
-  
+  const [preparationTime, setPreparationTime] = useState(null);
   const idRef = useRef(0);
   const dishFormSchema = Yup.object().shape({
     dishName: Yup.string()
       .min(3, 'Dish Name must be at least 3 characters long')
       .required('Dish Name is required'),
-    preparationTime: Yup.string().test(
-        'is-valid-time',
-        'Please provide the full time',
-        (value) => {
-          const timeFormatRegex = /^([01]\d|2[0-3]):([0-5]\d):([0-5]\d)$/;
-          return timeFormatRegex.test(value);
-        }
-      ),
+    preparationTime: Yup.string()
+      .matches(/^([01]\d|2[0-3]):([0-5]\d):([0-5]\d)$/, 'Please provide the full time')
+      .test('is-valid-time', 'Please provide a valid time', (value) => {
+        const formattedTime = dayjs(value, 'HH:mm:ss', true); // Sprawdź poprawność formatu czasu
+        return formattedTime.isValid();
+      }),
       
     dishType: Yup.string().required('Dish Type is required'),
     noOfSlices: Yup.lazy((value) => {
@@ -69,7 +67,7 @@ function DishForm() {
       try {
         let formData = {
           id: generateId(),
-          preparation_time: values.preparationTime,
+          preparation_time: dayjs(values.preparationTime, 'HH:mm:ss').format('HH:mm:ss'), // Formatuj czas
           type: values.dishType,
           
         };
@@ -93,7 +91,6 @@ function DishForm() {
             name: values.dishName,
             slices_of_bread: values.slicesOfBread,
           };
-          delete formData.diameter; 
         }
         const response = await axios.post('https://umzzcc503l.execute-api.us-west-2.amazonaws.com/dishes/', formData, {
           headers: {
@@ -109,6 +106,7 @@ function DishForm() {
           console.log('Response:', response.data);
           alert('Form submitted successfully!');
           resetForm();
+          setPreparationTime(null);
         }
       } catch (error) {
         console.error('Error:', error);
@@ -116,6 +114,7 @@ function DishForm() {
       }
     },
   });
+  
   const generateId = () => {
     idRef.current += 1;
     return String(idRef.current);
@@ -136,10 +135,12 @@ function DishForm() {
           label="Preparation Time"
           id="preparation-time"
           format="HH:mm:ss"
-          value={formik.initialValues.preparationTime}
+          value={preparationTime || formik.initialValues.preparationTime}
           onChange={(time) => {
-            const formattedTime = dayjs(time).format('HH:mm:ss');
+            const formattedTime = dayjs(time).format('HH:mm:ss'); // Formatuj czas
+            setPreparationTime(time); // Ustaw wartość stanu
             formik.setFieldValue('preparationTime', formattedTime);
+            
           }}
           onBlur={formik.handleBlur('preparationTime')}
           error={formik.touched.preparationTime && Boolean(formik.errors.preparationTime)}

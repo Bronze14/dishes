@@ -3,7 +3,8 @@ This project is a form component built using Vite, React, and SCSS. It utilizes 
 
 Prerequisites
 Make sure you have the following dependencies installed:
-
+Node version: v18.13.0,
+Npm version:  8.19.3,
 Node.js
 npm (Node Package Manager)
 Installation

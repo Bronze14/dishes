@@ -32,7 +32,7 @@ npm install
 Usage
 Open the project in your preferred code editor.
 
-Locate the src/DishForm.jsx file in the project's source code.
+Locate the src/components/DishForm.jsx file in the project's source code.
 
 Customize the form fields, validations, and submission logic based on your specific requirements.
 

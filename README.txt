@@ -45,7 +45,7 @@ Start the development server by running the following command:
 bash
 Copy code
 npm run dev
-Open your web browser and visit http://localhost:3000 to see the form in action.
+Open your web browser and visit http://localhost:5173 to see the form in action.
 
 Additional Information
 The following libraries and tools are used in this project:
